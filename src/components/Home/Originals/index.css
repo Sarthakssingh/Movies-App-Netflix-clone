@@ -1,0 +1,12 @@
+.slick-prev:before,
+.slick-next:before {
+  color: #ffffff;
+}
+.slick-arrow {
+  color: #ffffff;
+  height: 30px;
+}
+.slick-arrow:hover {
+  color: #ffffff;
+  height: 60px;
+}
