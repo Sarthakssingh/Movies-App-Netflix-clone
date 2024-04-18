@@ -99,7 +99,7 @@ class MovieDetailsView extends Component {
   renderLoadingView = () => (
     <div className="loader-container">
       <Loader
-        testid="loader"
+        data-testid="loader"
         type="TailSpin"
         height={35}
         width={380}
@@ -141,6 +141,8 @@ class MovieDetailsView extends Component {
     } else {
       dateEndingWord = 'th'
     }
+    const UpadtedrelaseDate = `${day}${dateEndingWord} ${monthName} ${year}`
+
     return (
       <>
         <div className="">
@@ -177,12 +179,7 @@ class MovieDetailsView extends Component {
             <h1 className="movie-info-budget-heading">Budget</h1>
             <p className="movie-info-budget">{budget}</p>
             <h1 className="movie-info-release-date">Release Date </h1>
-            <p>
-              <span className="movie-info-date">{day}</span>
-              <span className="movie-info-date-end">{dateEndingWord}</span>
-              <span className="movie-info-month-name">{monthName}</span>
-              <span className=" movie-info-year">{year}</span>
-            </p>
+            <p className="movie-info-date">{UpadtedrelaseDate} </p>
           </div>
         </div>
         <div className="similar-movies-container">

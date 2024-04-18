@@ -26,6 +26,7 @@ class SearchResults extends Component {
   }
 
   getSearchMovies = async () => {
+    this.setState({apiStatus: apiStatusConstant.inProgress})
     const {searchInput} = this.state
     const jwtToken = Cookies.get('jwt_token')
     const apiUrl = `https://apis.ccbp.in/movies-app/movies-search?search=${searchInput}`
@@ -126,7 +127,6 @@ class SearchResults extends Component {
   renderSuccessView = () => {
     const {searchInput} = this.state
     const isEmpty = searchInput === ''
-    console.log(isEmpty)
     return (
       <div>
         {isEmpty ? (

@@ -3,7 +3,6 @@ import {Component} from 'react'
 import Cookies from 'js-cookie'
 import {Link} from 'react-router-dom'
 import Header from '../Header'
-// import MovieCard from '../MovieCard'
 import FailureView from '../FailureView'
 import Footer from '../Footer'
 

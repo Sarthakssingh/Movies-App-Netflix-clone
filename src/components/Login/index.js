@@ -1,6 +1,7 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
 import {Redirect} from 'react-router-dom'
+import AccountContext from '../../context/AccountContext'
 
 import './index.css'
 
@@ -28,9 +29,9 @@ class Login extends Component {
       path: '/',
     })
     history.replace('/')
-    const {username, password} = this.state
-    localStorage.setItem('username', username)
-    localStorage.setItem('password', password)
+    // const {username, password} = this.state
+    // localStorage.setItem('username', username)
+    // localStorage.setItem('password', password)
   }
 
   onSubmitFailure = errorMsg => {
@@ -94,31 +95,32 @@ class Login extends Component {
   }
 
   render() {
-    const {showSubmitError, errorMsg} = this.state
+    const {showSubmitError, errorMsg, username, password} = this.state
 
     const jwtToken = Cookies.get('jwt_token')
     if (jwtToken !== undefined) {
       return <Redirect to="/" />
     }
-    console.log(this.state)
 
     return (
-      <div className="login-container">
-        <img
-          className="login-heading"
-          src="https://res.cloudinary.com/dljgducmq/image/upload/v1711878197/Group_7399movies_me0br8.png"
-          alt="login website logo"
-        />
-        <form className="login-contents" onSubmit={this.submitForm}>
-          <h1 className="login-content-heading">Login</h1>
-          <div className="input-container">{this.renderUsernameField()}</div>
-          <div className="input-container">{this.renderPasswordField()}</div>
-          <button type="submit" className="login-button">
-            Login
-          </button>
-          {showSubmitError && <p className="error-message">*{errorMsg}</p>}
-        </form>
-      </div>
+      <AccountContext.Provider value={{username, password}}>
+        <div className="login-container">
+          <img
+            className="login-heading"
+            src="https://res.cloudinary.com/dljgducmq/image/upload/v1711878197/Group_7399movies_me0br8.png"
+            alt="login website logo"
+          />
+          <form className="login-contents" onSubmit={this.submitForm}>
+            <h1 className="login-content-heading">Login</h1>
+            <div className="input-container">{this.renderUsernameField()}</div>
+            <div className="input-container">{this.renderPasswordField()}</div>
+            <button type="submit" className="login-button">
+              Login
+            </button>
+            {showSubmitError && <p className="error-message">*{errorMsg}</p>}
+          </form>
+        </div>
+      </AccountContext.Provider>
     )
   }
 }
