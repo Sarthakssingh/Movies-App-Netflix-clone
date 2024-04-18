@@ -3,15 +3,23 @@ import Loader from 'react-loader-spinner'
 import Cookies from 'js-cookie'
 import Slider from 'react-slick'
 import {FaChevronLeft, FaChevronRight} from 'react-icons/fa'
+import FailureView from '../../FailureView'
 
 import MovieCard from '../../MovieCard'
 
 import './index.css'
 
+const apiStatusConstant = {
+  initial: 'INITIAL',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+  inProgress: 'IN_PROGRESS',
+}
+
 class Originals extends Component {
   state = {
     originalMovies: [],
-    isLoading: false,
+    apiStatus: apiStatusConstant.initial,
   }
 
   componentDidMount() {
@@ -19,7 +27,7 @@ class Originals extends Component {
   }
 
   getOriginalMovies = async () => {
-    this.setState({isLoading: true})
+    this.setState({apiStatus: apiStatusConstant.inProgress})
     const jwtToken = Cookies.get('jwt_token')
     const apiUrl = 'https://apis.ccbp.in/movies-app/originals'
     const options = {
@@ -40,7 +48,7 @@ class Originals extends Component {
       }))
       this.setState({
         originalMovies: updatedData,
-        isLoading: false,
+        apiStatus: apiStatusConstant.success,
       })
     }
   }
@@ -99,9 +107,20 @@ class Originals extends Component {
     </div>
   )
 
+  renderFailureView = () => <FailureView onRetry={this.onRetry} />
+
   render() {
-    const {isLoading} = this.state
-    return <>{isLoading ? this.renderLoader() : this.renderOriginals()}</>
+    const {apiStatus} = this.state
+    switch (apiStatus) {
+      case apiStatusConstant.success:
+        return this.renderOriginals()
+      case apiStatusConstant.failure:
+        return this.renderFailureView()
+      case apiStatusConstant.inProgress:
+        return this.renderLoader()
+      default:
+        return null
+    }
   }
 }
 

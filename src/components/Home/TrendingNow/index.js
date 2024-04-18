@@ -3,7 +3,7 @@ import Loader from 'react-loader-spinner'
 import Cookies from 'js-cookie'
 import Slider from 'react-slick'
 import {FaChevronLeft, FaChevronRight} from 'react-icons/fa'
-
+import FailureView from '../../FailureView'
 import MovieCard from '../../MovieCard'
 
 import 'slick-carousel/slick/slick.css'
@@ -11,10 +11,17 @@ import 'slick-carousel/slick/slick-theme.css'
 
 import './index.css'
 
+const apiStatusConstant = {
+  initial: 'INITIAL',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+  inProgress: 'IN_PROGRESS',
+}
+
 class TrendingNow extends Component {
   state = {
     trendingMovies: [],
-    isLoading: false,
+    apiStatus: apiStatusConstant.initial,
   }
 
   componentDidMount() {
@@ -22,7 +29,7 @@ class TrendingNow extends Component {
   }
 
   getTrendingMovies = async () => {
-    this.setState({isLoading: true})
+    this.setState({apiStatus: apiStatusConstant.inProgress})
     const jwtToken = Cookies.get('jwt_token')
     const apiUrl = 'https://apis.ccbp.in/movies-app/trending-movies'
     const options = {
@@ -43,7 +50,7 @@ class TrendingNow extends Component {
       }))
       this.setState({
         trendingMovies: updatedData,
-        isLoading: false,
+        apiStatus: apiStatusConstant.success,
       })
     }
   }
@@ -102,15 +109,32 @@ class TrendingNow extends Component {
     </div>
   )
 
+  renderFailureView = () => <FailureView onRetry={this.onRetry} />
+
   render() {
-    const {isLoading} = this.state
-    return (
-      <div className="trending-container">
-        <div className="trending-slide">
-          {isLoading ? this.renderLoader() : this.renderTrendingMovie()}
-        </div>
-      </div>
-    )
+    const {apiStatus} = this.state
+    switch (apiStatus) {
+      case apiStatusConstant.success:
+        return (
+          <div className="trending-container">
+            <div className="trending-slide"> {this.renderTrendingMovie()}</div>
+          </div>
+        )
+      case apiStatusConstant.failure:
+        return (
+          <div className="trending-container">
+            <div className="trending-slide">{this.renderFailureView()}</div>
+          </div>
+        )
+      case apiStatusConstant.inProgress:
+        return (
+          <div className="trending-container">
+            <div className="trending-slide">{this.renderLoader()}</div>
+          </div>
+        )
+      default:
+        return null
+    }
   }
 }
 export default TrendingNow

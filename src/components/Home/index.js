@@ -86,8 +86,8 @@ class Home extends Component {
       <>
         <div
           className="devices-container"
-          //   alt={title}
-          alt="name"
+          alt={title}
+          //   alt="name"
           style={{
             background: `linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(24, 24, 24, 0.546875) 38.26%, #181818 92.82%, #181818 98.68%, #181818 108.61%),url(${backdropPath})`,
             backgroundSize: 'cover',
@@ -137,26 +137,37 @@ class Home extends Component {
   }
 
   render() {
-    return (
-      <div className="home-container">
-        {this.renderHomePoster()}
-        <div className="bottom-container">
-          <div className="main-container">
-            <h1 className="section-heading">Trending Now</h1>
-            <div className="slick-container">
-              <TrendingNow />
+    const {apiStatus} = this.state
+    switch (apiStatus) {
+      case apiStatusConstant.success:
+        return (
+          <div className="home-container">
+            {this.renderHomePoster()}
+            <div className="bottom-container">
+              <div className="main-container">
+                <h1 className="section-heading">Trending Now</h1>
+                <div className="slick-container">
+                  <TrendingNow />
+                </div>
+              </div>
+              <div className="main-container">
+                <h1 className="section-heading">Originals</h1>
+                <div className="slick-container">
+                  <Originals />
+                </div>
+              </div>
             </div>
+            <Footer />
           </div>
-          <div className="main-container">
-            <h1 className="section-heading">Originals</h1>
-            <div className="slick-container">
-              <Originals />
-            </div>
-          </div>
-        </div>
-        <Footer />
-      </div>
-    )
+        )
+      case apiStatusConstant.failure:
+        return this.renderFailureView()
+      case apiStatusConstant.inProgress:
+        return this.renderLoader()
+
+      default:
+        return null
+    }
   }
 }
 
