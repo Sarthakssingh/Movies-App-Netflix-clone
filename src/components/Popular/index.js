@@ -66,7 +66,7 @@ class Popular extends Component {
       <div className="popular-movie-container">
         <ul className="popular-ul-container">
           {popularMovies.map(each => (
-            <Link to={`/movies/${each.id}`} key={each.id}>
+            <Link to={`/movies/${each.id}`}>
               <li className="popular-li-item" key={each.id}>
                 <img
                   className="popular-poster"
@@ -90,7 +90,7 @@ class Popular extends Component {
   renderLoadingView = () => (
     <div className="loader-container">
       <Loader
-        testid="loader"
+        data-testid="loader"
         type="TailSpin"
         height={35}
         width={380}

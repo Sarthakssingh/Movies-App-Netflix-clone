@@ -7,6 +7,7 @@ import Header from '../Header'
 import Originals from './Originals'
 import Footer from '../Footer'
 import FailureView from '../FailureView'
+import RenderLoading from '../RenderLoading'
 import './index.css'
 
 const apiStatusConstant = {
@@ -29,7 +30,8 @@ class Home extends Component {
   getHomePagePoster = async () => {
     this.setState({apiStatus: apiStatusConstant.inProgress})
     const jwtToken = Cookies.get('jwt_token')
-    const apiUrl = `https://apis.ccbp.in/movies-app/trending-movies`
+    const apiUrl = `https://apis.ccbp.in/movies-app/originals`
+    // const apiUrl = `https://apis.ccbp.in/movies-app/trending-movies`
     const options = {
       method: 'GET',
       headers: {
@@ -87,7 +89,6 @@ class Home extends Component {
         <div
           className="devices-container"
           alt={title}
-          //   alt="name"
           style={{
             background: `linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(24, 24, 24, 0.546875) 38.26%, #181818 92.82%, #181818 98.68%, #181818 108.61%),url(${backdropPath})`,
             backgroundSize: 'cover',
@@ -130,7 +131,6 @@ class Home extends Component {
         return this.renderFailureView()
       case apiStatusConstant.inProgress:
         return this.renderLoader()
-
       default:
         return null
     }

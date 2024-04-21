@@ -57,7 +57,7 @@ class Originals extends Component {
     const {originalMovies} = this.state
     const settings = {
       dots: false,
-      infinite: true,
+      infinite: false,
       slidesToShow: 4,
       slidesToScroll: 1,
       nextArrow: <FaChevronRight className="slick-arrow" />,
@@ -106,6 +106,10 @@ class Originals extends Component {
       />
     </div>
   )
+
+  onRetry = () => {
+    this.getOriginalMovies()
+  }
 
   renderFailureView = () => <FailureView onRetry={this.onRetry} />
 

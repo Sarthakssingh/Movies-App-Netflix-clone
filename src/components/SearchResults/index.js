@@ -71,7 +71,7 @@ class SearchResults extends Component {
 
   renderFailureView = () => <FailureView onRetry={this.onRetry} />
 
-  renderLoader = () => (
+  renderLoadingView = () => (
     <div className="loader-container">
       <Loader type="TailSpin" height={35} width={380} color=" #D81F26" />
     </div>

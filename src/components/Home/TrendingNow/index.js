@@ -59,7 +59,7 @@ class TrendingNow extends Component {
     const {trendingMovies} = this.state
     const settings = {
       dots: false,
-      infinite: true,
+      infinite: false,
       slidesToShow: 4,
       slidesToScroll: 1,
       responsive: [
@@ -108,6 +108,10 @@ class TrendingNow extends Component {
       />
     </div>
   )
+
+  onRetry = () => {
+    this.getTrendingMovies()
+  }
 
   renderFailureView = () => <FailureView onRetry={this.onRetry} />
 
