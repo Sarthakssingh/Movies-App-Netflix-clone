@@ -50,6 +50,10 @@ class Originals extends Component {
         originalMovies: updatedData,
         apiStatus: apiStatusConstant.success,
       })
+    } else {
+      this.setState({
+        apiStatus: apiStatusConstant.failure,
+      })
     }
   }
 

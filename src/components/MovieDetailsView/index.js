@@ -99,7 +99,7 @@ class MovieDetailsView extends Component {
   renderLoadingView = () => (
     <div className="loader-container">
       <Loader
-        data-testid="loader"
+        testid="loader"
         type="TailSpin"
         height={35}
         width={380}

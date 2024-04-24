@@ -7,7 +7,7 @@ import Header from '../Header'
 import Originals from './Originals'
 import Footer from '../Footer'
 import FailureView from '../FailureView'
-import RenderLoading from '../RenderLoading'
+// import RenderLoading from '../RenderLoading'
 import './index.css'
 
 const apiStatusConstant = {
@@ -72,7 +72,7 @@ class Home extends Component {
   renderLoader = () => (
     <div className="loader-container">
       <Loader
-        data-testid="loader"
+        testid="loader"
         type="TailSpin"
         height={35}
         width={380}
@@ -137,37 +137,37 @@ class Home extends Component {
   }
 
   render() {
-    const {apiStatus} = this.state
-    switch (apiStatus) {
-      case apiStatusConstant.success:
-        return (
-          <div className="home-container">
-            {this.renderHomePoster()}
-            <div className="bottom-container">
-              <div className="main-container">
-                <h1 className="section-heading">Trending Now</h1>
-                <div className="slick-container">
-                  <TrendingNow />
-                </div>
-              </div>
-              <div className="main-container">
-                <h1 className="section-heading">Originals</h1>
-                <div className="slick-container">
-                  <Originals />
-                </div>
-              </div>
+    // const {apiStatus} = this.state
+    // switch (apiStatus) {
+    //   case apiStatusConstant.success:
+    return (
+      <div className="home-container">
+        {this.renderHomePoster()}
+        <div className="bottom-container">
+          <div className="main-container">
+            <h1 className="section-heading">Trending Now</h1>
+            <div className="slick-container">
+              <TrendingNow />
             </div>
-            <Footer />
           </div>
-        )
-      case apiStatusConstant.failure:
-        return this.renderFailureView()
-      case apiStatusConstant.inProgress:
-        return this.renderLoader()
+          <div className="main-container">
+            <h1 className="section-heading">Originals</h1>
+            <div className="slick-container">
+              <Originals />
+            </div>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    )
+    //   case apiStatusConstant.failure:
+    //     return this.renderFailureView()
+    //   case apiStatusConstant.inProgress:
+    //     return this.renderLoader()
 
-      default:
-        return null
-    }
+    //   default:
+    //     return null
+    // }
   }
 }
 

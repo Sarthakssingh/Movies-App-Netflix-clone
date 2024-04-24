@@ -11,15 +11,15 @@ import './index.css'
 class Header extends Component {
   state = {
     showMenu: false,
-    showSearchBar: false,
+    // showSearchBar: false,
     searchInp: '',
   }
 
-  onClickSearchIcon = () => {
-    this.setState(prevState => ({
-      showSearchBar: !prevState.showSearchBar,
-    }))
-  }
+  //   onClickSearchIcon = () => {
+  //     this.setState(prevState => ({
+  //       showSearchBar: !prevState.showSearchBar,
+  //     }))
+  //   }
 
   onClickSearchInpIcon = () => {
     const {searchInput} = this.props
@@ -28,7 +28,7 @@ class Header extends Component {
   }
 
   onClickShowMenu = () => {
-    this.setState({showMenu: true})
+    this.setState({showMenu: true}, this.renderSearchInput)
   }
 
   onClickHideMenu = () => {
@@ -43,8 +43,49 @@ class Header extends Component {
     }
   }
 
-  render() {
-    const {showMenu, showSearchBar} = this.state
+  renderSearchInput = () => {
+    const {showSearchInputBlock} = this.props
+    return (
+      <>
+        {showSearchInputBlock ? (
+          <div className="search-input">
+            <input
+              type="search"
+              onChange={this.onChangeSearchInput}
+              placeholder="search"
+              className="search"
+            />
+            <button
+              type="button"
+              className="search-button"
+              testid="searchButton"
+            >
+              <HiOutlineSearch
+                className="search-btn"
+                size={20}
+                color="white"
+                onClick={this.onClickSearchInpIcon}
+              />
+            </button>
+          </div>
+        ) : (
+          <Link to="/search">
+            <button type="button" className="icon-button" testid="searchButton">
+              <HiOutlineSearch
+                className="search-btn"
+                size={20}
+                color="white"
+                // onClick={this.onClickSearchIcon}
+              />
+            </button>
+          </Link>
+        )}
+      </>
+    )
+  }
+
+  renderHeader = () => {
+    const {showMenu} = this.state
     const {match} = this.props
     const {path} = match
     let homeClassNameStyling
@@ -61,8 +102,13 @@ class Header extends Component {
         popularClassNameStyling = 'passive'
         accountClassNameStyling = 'active'
         break
-      default:
+      case '/':
         homeClassNameStyling = 'active'
+        popularClassNameStyling = 'passive'
+        accountClassNameStyling = 'passive'
+        break
+      default:
+        homeClassNameStyling = 'passive'
         popularClassNameStyling = 'passive'
         accountClassNameStyling = 'passive'
         break
@@ -92,46 +138,7 @@ class Header extends Component {
             </ul>
           </div>
           <div className="search-container">
-            {showSearchBar && (
-              <div className="search-input">
-                <input
-                  type="search"
-                  onKeyDown={this.onChangeSearchInput}
-                  placeholder="search"
-                  className="search"
-                />
-                <button
-                  type="button"
-                  className="search-button"
-                  testid="searchButton"
-                >
-                  <HiOutlineSearch
-                    className="search-btn"
-                    size={20}
-                    color="white"
-                    testid="searchButton"
-                    onClick={this.onClickSearchInpIcon}
-                  />
-                </button>
-              </div>
-            )}
-            {!showSearchBar && (
-              <Link to="/search">
-                <button
-                  type="button"
-                  className="icon-button"
-                  testid="searchButton"
-                >
-                  <HiOutlineSearch
-                    className="search-btn"
-                    size={20}
-                    color="white"
-                    testid="searchButton"
-                    onClick={this.onClickSearchIcon}
-                  />
-                </button>
-              </Link>
-            )}
+            {this.renderSearchInput()}
             <Link to="/Account">
               <img
                 src="https://res.cloudinary.com/dyx9u0bif/image/upload/v1657426927/account-avatar_irmhck.png"
@@ -177,6 +184,10 @@ class Header extends Component {
         )}
       </nav>
     )
+  }
+
+  render() {
+    return this.renderHeader()
   }
 }
 export default withRouter(Header)

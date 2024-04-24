@@ -52,6 +52,10 @@ class TrendingNow extends Component {
         trendingMovies: updatedData,
         apiStatus: apiStatusConstant.success,
       })
+    } else {
+      this.setState({
+        apiStatus: apiStatusConstant.failure,
+      })
     }
   }
 

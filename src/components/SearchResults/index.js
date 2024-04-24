@@ -72,7 +72,7 @@ class SearchResults extends Component {
   renderFailureView = () => <FailureView onRetry={this.onRetry} />
 
   renderLoadingView = () => (
-    <div className="loader-container">
+    <div className="loader-container" testid="loader">
       <Loader type="TailSpin" height={35} width={380} color=" #D81F26" />
     </div>
   )
@@ -163,6 +163,7 @@ class SearchResults extends Component {
         <Header
           searchInput={this.searchInput}
           onClickSearch={this.searchInput}
+          showSearchInputBlock
         />
         <div>{this.renderSearchMovies()}</div>
         <Footer />
