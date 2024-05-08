@@ -21,9 +21,9 @@ class SearchResults extends Component {
     apiStatus: apiStatusConstant.initial,
   }
 
-  componentDidMount() {
-    this.getSearchMovies()
-  }
+  //   componentDidMount() {
+  //     this.getSearchMovies()
+  //   }
 
   getSearchMovies = async () => {
     this.setState({apiStatus: apiStatusConstant.inProgress})
@@ -151,7 +151,6 @@ class SearchResults extends Component {
         return this.renderFailureView()
       case apiStatusConstant.inProgress:
         return this.renderLoadingView()
-
       default:
         return null
     }
@@ -165,7 +164,7 @@ class SearchResults extends Component {
           onClickSearch={this.searchInput}
           showSearchInputBlock
         />
-        <div>{this.renderSearchMovies()}</div>
+        <div className="search-main-container">{this.renderSearchMovies()}</div>
         <Footer />
       </div>
     )

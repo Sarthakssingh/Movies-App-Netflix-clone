@@ -70,14 +70,8 @@ class Home extends Component {
   renderFailureView = () => <FailureView onRetry={this.onRetry} />
 
   renderLoader = () => (
-    <div className="loader-container">
-      <Loader
-        testid="loader"
-        type="TailSpin"
-        height={35}
-        width={380}
-        color=" #D81F26"
-      />
+    <div className="loader-container" testid="loader">
+      <Loader type="TailSpin" height={35} width={380} color=" #D81F26" />
     </div>
   )
 
@@ -101,13 +95,8 @@ class Home extends Component {
         >
           <Header className="header-opacity" />
           <div className=" home-header-content heading-container">
-            <h1 className=" movie-details-name home-poster-title" key={title}>
-              {title}
-            </h1>
-            <h1
-              className=" movie-details-description home-poster-overview"
-              key={overview}
-            >
+            <h1 className=" movie-details-name home-poster-title">{title}</h1>
+            <h1 className=" movie-details-description home-poster-overview">
               {overview}
             </h1>
             <button

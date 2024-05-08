@@ -102,14 +102,8 @@ class TrendingNow extends Component {
   }
 
   renderLoader = () => (
-    <div className="loader-container">
-      <Loader
-        data-testid="loader"
-        type="TailSpin"
-        height={35}
-        width={380}
-        color=" #D81F26"
-      />
+    <div className="loader-container" testid="loader">
+      <Loader type="TailSpin" height={35} width={380} color=" #D81F26" />
     </div>
   )
 
